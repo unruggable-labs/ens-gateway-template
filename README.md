@@ -2,8 +2,8 @@
 
 1. `foundryup`
 1. `bun i`
-1. `bun test/testnet.ts` &mdash; uses [`sepolia:0x83FC`](https://sepolia.etherscan.io/address/0x83fc17a94115ae805f7c251635363eed5180fdae)
-1. `bun test/local.ts` &mdash; local testnet
+1. [`bun test/testnet.ts`](./test/testnet.ts) &mdash; uses [`sepolia:0x83FC`](https://sepolia.etherscan.io/address/0x83fc17a94115ae805f7c251635363eed5180fdae)
+1. [`bun test/local.ts`](./test/local.ts) &mdash; uses anvil testnet
 
 ### General Setup
 
@@ -29,30 +29,34 @@ using GatewayFetcher for GatewayRequest;
 6. build a request and fetch it
 ```solidity
 function abc(string memory input) external view returns ($RETURN_ARGUMENTS) {
-	GatewayRequest memory req = GatewayFetcher.newRequest(1);
-	req.setTarget(0x...);
-	req.setSlot(123);
-	req.readBytes();
-	req.setOutput(0);
-	fetch(verifier, req, this.abcCallback.selector);
+    GatewayRequest memory req = GatewayFetcher.newRequest(1);
+    req.setTarget(0x...);
+    req.setSlot(123);
+    req.readBytes();
+    req.setOutput(0);
+    fetch(verifier, req, this.abcCallback.selector);
 
-	// you should probably pass the inputs along with the callback
-	// you can also supply your own gateways(s), or send empty array to use default
-	fetch(verifier, req, this.abcCallback.selector, abi.encode(input), new string[](0));
+    // you should probably pass the inputs along with the callback
+    // you can also supply your own gateways(s), or send empty array to use default
+    fetch(verifier, req, this.abcCallback.selector, abi.encode(input), new string[](0));
 }
 ```
 > ⚠️ `$RETURN_ARGUMENTS` can be anything but **MUST** match
 
 7. receive callback and return results
 ```solidity
-function abcCallback(bytes[] calldata values, uint8 exitCode, bytes calldata data) external view returns ($RETURN_ARGUMENTS) {
-	// if you used req.assert(), req.requireContract(), req.requireNonzero()
-	// check if exitCode is nonzero
+function abcCallback(
+    bytes[] calldata values,
+    uint8 exitCode,
+    bytes calldata data
+) external view returns ($RETURN_ARGUMENTS) {
+    // if you used req.assert(), req.requireContract(), req.requireNonzero()
+    // check if exitCode is nonzero
 
-	// if you passed along extra information, decode it from data
-	string memory input = abi.decode(data, (string));
+    // if you passed along extra information, decode it from data
+    string memory input = abi.decode(data, (string));
 
-	// parse values and return result
-	return (...);
+    // parse values and return result
+    return (...);
 }
 ```

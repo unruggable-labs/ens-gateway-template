@@ -46,7 +46,6 @@ const L1SimpleResolver = await foundry.deploy({
 	args: [SelfVerifier, L2DataStorage],
 });
 
-// query a name
 async function resolve(name: string) {
 	const resolver = new EnsResolver(
 		foundry.provider,
@@ -57,6 +56,7 @@ async function resolve(name: string) {
 	return { name, address };
 }
 
+// query the names
 console.log(await resolve("raffy"));
 console.log(await resolve("a"));
 
