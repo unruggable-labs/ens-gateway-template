@@ -2,7 +2,6 @@
 
 1. `foundryup`
 1. `bun i`
-1. [`bun test/testnet.ts`](./test/testnet.ts) &mdash; uses [`sepolia:0x83FC`](https://sepolia.etherscan.io/address/0x83fc17a94115ae805f7c251635363eed5180fdae)
 1. [`bun test/local.ts`](./test/local.ts) &mdash; uses anvil testnet
 
 ### General Setup
