@@ -55,7 +55,7 @@ await foundry.confirm(
 // deploy L1 contract
 const L1Resolver = await foundry.deploy({
 	file: "L1Resolver",
-	args: [SelfVerifier, L2Contract],
+	args: [SelfVerifier, [], L2Contract],
 });
 
 // query the names

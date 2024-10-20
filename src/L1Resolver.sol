@@ -36,11 +36,13 @@ contract L1Resolver is IERC165, IExtendedResolver, GatewayFetchTarget {
     using GatewayFetcher for GatewayRequest;
 
     IGatewayVerifier public immutable verifier;
-    address public immutable l2TargetAddress;
+    string[] public gateways;
+    address public immutable target;
 
-    constructor(address _verifier, address _l2TargetAddress) {
+    constructor(address _verifier, string[] memory _gateways, address _target) {
         verifier = IGatewayVerifier(_verifier);
-        l2TargetAddress = _l2TargetAddress;
+        gateways = _gateways;
+        target = _target;
     }
 
     function supportsInterface(bytes4 x) external pure returns (bool) {
@@ -54,7 +56,7 @@ contract L1Resolver is IERC165, IExtendedResolver, GatewayFetchTarget {
         bytes calldata data
     ) external view returns (bytes memory) {
         GatewayRequest memory r = GatewayFetcher.newRequest(3);
-        r.setTarget(l2TargetAddress); // target storage contract
+        r.setTarget(target); // target storage contract
         bytes memory label = name[1:1 + uint8(name[0])]; // extract leading label
         r.setSlot(0).push(keccak256(label)).follow(); // _records[node]
         r.read().requireNonzero(1).setOutput(0); // read owner
@@ -87,7 +89,7 @@ contract L1Resolver is IERC165, IExtendedResolver, GatewayFetchTarget {
             r,
             this.resolveCallback.selector,
             data, // remember the calldata
-            new string[](0) // use default gateways
+            gateways
         );
     }
 

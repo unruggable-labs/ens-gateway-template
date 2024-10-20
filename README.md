@@ -3,6 +3,8 @@
 1. `foundryup`
 1. `bun i`
 1. [`bun test/local.ts`](./test/local.ts) &mdash; uses anvil testnet
+1. [`bun test/testnet.ts`](./test/testnet.ts) &mdash; test an L2 deployment
+	* simple [deploy.sh](./deploy.sh) script
 
 ### General Setup
 
