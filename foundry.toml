@@ -1,0 +1,8 @@
+[profile.default]
+
+# src = "src"
+# lib = ["lib", "node_modules"]
+
+remappings = [
+	'@unruggable/=node_modules/@unruggable/'
+]
