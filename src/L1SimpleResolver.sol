@@ -64,7 +64,8 @@ contract L1SimpleResolver is GatewayFetchTarget, IERC165, IExtendedResolver {
         } else {
             return _nullResponse();
         }
-        r.debug("before fetch");
+        // uncomment if you want debugging
+        //r.debug("before fetch");
         // request it
         fetch(
             verifier,
